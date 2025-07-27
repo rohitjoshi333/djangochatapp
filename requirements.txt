@@ -1,0 +1,9 @@
+Django==5.2.4
+gunicorn==23.0.0
+whitenoise==6.9.0
+dj-database-url==3.0.1
+djangorestframework==3.16.0
+djangorestframework_simplejwt==5.5.1
+psycopg2==2.9.10
+pillow==11.3.0
+python-dotenv

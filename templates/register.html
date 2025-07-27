@@ -1,0 +1,58 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Register - ChatApp</title>
+  <link rel="stylesheet" href="{% static 'style.css'%}" />
+  <style>
+    .avatar-upload {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .avatar-upload label {
+      cursor: pointer;
+      display: inline-block;
+    }
+    .avatar-upload img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid #007bff;
+      object-fit: cover;
+      transition: 0.3s ease;
+    }
+    .avatar-upload img:hover {
+      opacity: 0.8;
+    }
+    .avatar-upload input[type="file"] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Register</h2>
+    <form method="POST" action="{% url 'register' %}" enctype="multipart/form-data">
+  {% csrf_token %}
+  
+  <div class="avatar-upload">
+    <label for="avatarInput">
+      <img src="https://via.placeholder.com/100?text=Avatar" alt="Avatar Placeholder" />
+    </label>
+    <input type="file" id="avatarInput" name="avatar" accept="image/*" />
+  </div>
+
+  <input name="username" type="text" placeholder="Username" required />
+  <input name="email" type="email" placeholder="Email" required />
+  <input name="password" type="password" placeholder="Password" required />
+  <input name="confirmPassword" type="password" placeholder="Confirm Password" required />
+  
+  <button type="submit">Register</button>
+</form>
+
+  </div>
+</body>
+</html>

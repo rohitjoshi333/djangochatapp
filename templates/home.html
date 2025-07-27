@@ -1,0 +1,38 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ChatApp - Connect Smarter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{% static 'home.css'%}" />
+</head>
+<body>
+  <header class="hero-header">
+    <div class="logo">💬 ChatApp</div>
+    <nav class="nav-links">
+    </nav>
+  </header>
+
+  <section class="hero-section">
+    <div class = "join-room-section">
+    <h2>Join a Chat Room</h2>
+    <form action="{% url 'checkview' %}" method = "POST" class="join-room-form">
+      {% csrf_token %}
+      <input type="text" name="room_name" placeholder="Room Name" required />
+      <input type="text" name="username" placeholder="Your Username" required />
+      <button type="submit" class="btn">Join Room</button>
+    </form>
+    </div>
+    <div class="hero-image">
+      <img src="https://cdn-icons-png.flaticon.com/512/4712/4712076.png" alt="Chat Image" />
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>&copy; 2025 ChatApp</p>
+  </footer>
+</body>
+</html>

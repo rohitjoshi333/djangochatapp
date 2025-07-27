@@ -1,0 +1,46 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ChatApp - Connect Smarter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{% static 'home.css'%}" />
+</head>
+<body>
+  <header class="hero-header">
+    <div class="logo">💬 ChatApp</div>
+    <nav class="nav-links">
+      {% if user.is_authenticated %}
+      <a href="{% url 'logout' %}" class="btn get-started">Logout</a>
+      {% else %}
+      <a href="{% url 'login' %}" class="btn get-started">Login / Signup</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <section class="hero-section">
+    <div class="hero-text">
+      {% if user.is_authenticated %}
+      <h1>Welcome, {{user.username}}</h1>
+      <p>Start real-time conversations with anyone, anywhere.</p>
+      <a href="{% url 'home' %}" class="btn primary-btn">Join Room</a>
+      {% else %}
+      <h1>Connect. Chat. Collaborate.</h1>
+      <p>Start real-time conversations with anyone, anywhere.</p>
+      <a href="{% url 'register' %}" class="btn primary-btn">Get Started</a>
+      {% endif %}
+    </div>
+    <div class="hero-image">
+      <img src="https://cdn-icons-png.flaticon.com/512/4712/4712076.png" alt="Chat Image" />
+    </div>
+  </section>
+
+
+  <footer class="footer">
+    <p>&copy; 2025 ChatApp</p>
+  </footer>
+</body>
+</html>

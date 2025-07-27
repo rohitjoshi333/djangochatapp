@@ -1,0 +1,87 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ room }} - DjChat</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">
+      <h3>{{ room }} - Chat Room</h3>
+      <a href="/" class="logout">Back</a>
+    </div>
+
+    <div id="chat-box" class="chat-box">
+      <!-- Messages will be dynamically loaded here -->
+    </div>
+
+    <form id="chat-form">
+      {% csrf_token %}
+      <input type="hidden" id="username" name="username" value="{{ username }}">
+      <input type="hidden" id="room_id" name="room_id" value="{{ room_details.id }}">
+      <input type="text" id="msg" name="message" placeholder="Type your message...">
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
+  <script>
+    // Function to fetch messages every second
+    $(document).ready(function() {
+      setInterval(function() {
+        $.ajax({
+          type: 'GET',
+          url: '/getMessages/{{ room }}/',
+          success: function(response) {
+            $("#chat-box").empty();
+            for (var key in response.messages) {
+              var msg = response.messages[key];
+              var direction = msg.user === $('#username').val() ? 'right' : 'left';
+              var html = `
+                <div class="message ${direction}">
+                  <img src="https://i.pravatar.cc/40?u=${msg.user}" alt="${msg.user}">
+                  <div>
+                    <p><strong>${msg.user}</strong></p>
+                    <p>${msg.value}</p>
+                    <span class="time">${msg.date}</span>
+                  </div>
+                </div>
+              `;
+              $("#chat-box").append(html);
+            }
+            var chatBox = document.getElementById("chat-box");
+            chatBox.scrollTop = chatBox.scrollHeight;
+          },
+          error: function() {
+            alert('An error occurred while loading messages.');
+          }
+        });
+      }, 1000);
+    });
+
+    $(document).on('submit', '#chat-form', function(e) {
+      e.preventDefault();
+      const message = $('#msg').val().trim();
+      if (message === "") return; // Skip empty or space-only messages
+
+      $.ajax({
+        type: 'POST',
+        url: '/send',
+        data: {
+          username: $('#username').val(),
+          room_id: $('#room_id').val(),
+          message: message,
+          csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function(data) {
+          $('#msg').val('');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
