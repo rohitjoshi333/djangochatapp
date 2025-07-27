@@ -26,11 +26,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
-    "091ec764f5be.ngrok-free.app"
-]
+ALLOWED_HOSTS = ['djangochatapp-t0sd.onrender.com', 'localhost', '127.0.0.1']
 
 # Application definition
 
